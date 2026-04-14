@@ -1,4 +1,4 @@
-# EcoMeal — Workflow de Conception (Étapes 1–5)
+# EcoMeal — Workflow de Conception 
 
 > **Projet :** EcoMeal — Réduire le gaspillage alimentaire en connectant des commerces locaux avec des utilisateurs pour vendre les invendus à prix réduit.
 
@@ -756,5 +756,5 @@ CREATE TABLE promo_codes (
 
 ---
 
-*Document produit dans le cadre du projet EcoMeal — Workflow de Conception Étapes 1–5.*  
-*Prochaine étape : Étape 6 — Architecture Decision Records (ADR) & Préparation à la Soutenance.*
+*Document produit dans le cadre du projet EcoMeal*  
+
