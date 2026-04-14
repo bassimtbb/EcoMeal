@@ -1,211 +1,211 @@
-# EcoMeal — Design Workflow (Steps 1–3)
-> **Course:** Conception d'Application & Architecture N-Tier — Prof. Addi  
-> **Project:** EcoMeal — Reducing food waste by connecting local businesses with users to sell unsold food at a discount.
+# EcoMeal — Workflow de Conception (Étapes 1–3)
+> **Cours :** Conception d'Application & Architecture N-Tier — Prof. Addi  
+> **Projet :** EcoMeal — Réduire le gaspillage alimentaire en connectant les commerces locaux avec les utilisateurs pour vendre les invendus à prix réduit.
 
 ---
 
-## Table of Contents
+## Table des matières
 
-1. [Step 1 — Raw Functionality List](#step-1--raw-functionality-list)
-2. [Step 2 — Grouping by Business Domain (DDD)](#step-2--grouping-by-business-domain-ddd)
-3. [Step 3 — Business Entities per Module](#step-3--business-entities-per-module)
-
----
-
-## Step 1 — Raw Functionality List
-
-> **Method:** Exhaustive, unsorted list. We are in "functional pure" mode — *what* the app does, not *how* it's built. Three perspectives: Consumer, Business Partner, and System Admin.
-
-### 👤 Consumer Perspective
-
-- Register a new user account (email + password)
-- Log in / Log out
-- Reset forgotten password via email
-- View and edit personal profile (name, address, dietary preferences)
-- Browse available meal offers on a map or list view
-- Filter offers by category (bakery, restaurant, sushi…), distance, price, or dietary tag (vegan, gluten-free…)
-- Search for offers by business name or food type
-- View a detailed offer page (photos, description, quantity, pickup time window, original price, discounted price)
-- Add an offer to a shopping cart
-- Remove an item from the shopping cart
-- Apply a discount or promo code
-- Place an order and pay online
-- Receive an order confirmation (in-app + email)
-- View current and past orders
-- Cancel an order (within a time limit)
-- Generate and display a QR code for in-store pickup
-- Rate and review a business after pickup
-- Save favourite businesses
-- Receive push/email notifications for new offers nearby
-- Manage notification preferences (frequency, type)
-- Report a problem with an order or a business
-- Request a refund or open a dispute
-
-### 🏪 Business Partner Perspective
-
-- Register a business account (name, address, SIRET/registration number, type)
-- Upload business logo and photos
-- Submit account for admin verification/approval
-- Log in to a business dashboard
-- Create a new meal offer (title, description, photos, category, quantity, pickup window, original price, discount price, expiry time)
-- Edit an existing offer
-- Deactivate or delete an offer
-- Mark an offer as "sold out"
-- View real-time stock count for active offers
-- View incoming orders for the day
-- Scan a consumer's QR code to validate pickup
-- Mark an order as picked up / completed
-- View business analytics (number of meals saved, revenue, average rating, waste reduction stats)
-- Receive payouts for completed orders
-- View payout history and invoices
-- Respond to consumer reviews
-- Manage business opening hours
-- Set geographic service radius or pickup location
-- Receive notifications when an offer is running low on stock
-- Receive notification of a new order
-
-### 🛡️ System Admin Perspective
-
-- View and manage all user accounts (consumers + businesses)
-- Approve or reject business registration requests
-- Suspend or ban an account (consumer or business)
-- Moderate reported content (reviews, offers)
-- Manage platform-wide discount codes and promotions
-- View platform analytics dashboard (total meals saved, total orders, active users, revenue)
-- Manage categories and food tags
-- Configure commission rates per business type
-- Process refund requests and disputes
-- Send system-wide announcements or notifications
-- Monitor system health (API uptime, error rates)
-- Manage content (FAQs, terms of service, privacy policy)
+1. [Étape 1 — Liste brute des fonctionnalités](#étape-1--liste-brute-des-fonctionnalités)
+2. [Étape 2 — Regroupement par domaine métier (DDD)](#étape-2--regroupement-par-domaine-métier-ddd)
+3. [Étape 3 — Entités métier par module](#étape-3--entités-métier-par-module)
 
 ---
 
-## Step 2 — Grouping by Business Domain (DDD)
+## Étape 1 — Liste brute des fonctionnalités
 
-> **Principle applied:** High Cohesion within each module (all features share the same business reason to change), Low Coupling between modules (each module exposes clean interfaces, does not depend on internals of another).
+> **Méthode :** Liste exhaustive et non triée. Nous sommes en mode « fonctionnel pur » — *ce que* l'application fait, pas *comment* elle est construite. Trois perspectives : Consommateur, Partenaire Commercial et Administrateur Système.
 
-After analysing the feature list, six **Bounded Contexts** emerge naturally:
+### 👤 Perspective Consommateur
 
-| # | Module / Bounded Context | Core Responsibility | Key Trigger for Separation |
+- Créer un compte utilisateur (email + mot de passe)
+- Se connecter / Se déconnecter
+- Réinitialiser le mot de passe oublié par email
+- Consulter et modifier son profil (nom, adresse, préférences alimentaires)
+- Parcourir les offres de repas disponibles sur une carte ou en liste
+- Filtrer les offres par catégorie (boulangerie, restaurant, sushi…), distance, prix ou tag diététique (végan, sans gluten…)
+- Rechercher des offres par nom d’établissement ou type de nourriture
+- Voir une offre en détail (photos, description, quantité, horaire de retrait, prix original, prix réduit)
+- Ajouter une offre au panier
+- Retirer un article du panier
+- Appliquer un code de réduction ou promo
+- Passer une commande et payer en ligne
+- Recevoir une confirmation de commande (in-app + email)
+- Voir les commandes en cours et passées
+- Annuler une commande (dans un délai imparti)
+- Générer et afficher un code QR pour le retrait en magasin
+- Noter et commenter un établissement après retrait
+- Enregistrer des établissements favoris
+- Recevoir des notifications (push/email) pour les nouvelles offres à proximité
+- Gérer les préférences de notifications (fréquence, type)
+- Signaler un problème avec une commande ou un établissement
+- Demander un remboursement ou ouvrir un litige
+
+### 🏪 Perspective Partenaire Commercial
+
+- Créer un compte établissement (nom, adresse, SIRET, type)
+- Télécharger le logo et des photos de l’établissement
+- Soumettre le compte pour vérification/approbation par l’admin
+- Se connecter au tableau de bord établissement
+- Créer une nouvelle offre de repas (titre, description, photos, catégorie, quantité, créneau de retrait, prix original, prix réduit, date d’expiration)
+- Modifier une offre existante
+- Désactiver ou supprimer une offre
+- Marquer une offre comme « épuisée »
+- Voir le stock en temps réel pour les offres actives
+- Voir les commandes reçues pour la journée
+- Scanner le code QR d’un consommateur pour valider le retrait
+- Marquer une commande comme retirée / terminée
+- Voir les analyses de l’établissement (repas sauvés, chiffre d’affaires, note moyenne, statistiques de réduction du gaspillage)
+- Recevoir les paiements pour les commandes terminées
+- Voir l’historique des paiements et les factures
+- Répondre aux avis des consommateurs
+- Gérer les horaires d’ouverture
+- Définir un rayon géographique ou un lieu de retrait
+- Recevoir des notifications quand une offre est en stock bas
+- Recevoir une notification pour une nouvelle commande
+
+### 🛡️ Perspective Administrateur Système
+
+- Voir et gérer tous les comptes utilisateurs (consommateurs + établissements)
+- Approuver ou rejeter les demandes d’inscription d’établissements
+- Suspendre ou bannir un compte (consommateur ou établissement)
+- Modérer les signalements (avis, offres)
+- Gérer les codes promo et promotions à l’échelle de la plateforme
+- Voir le tableau de bord analytique de la plateforme (total repas sauvés, commandes, utilisateurs actifs, chiffre d’affaires)
+- Gérer les catégories et les tags alimentaires
+- Configurer les taux de commission par type d’établissement
+- Traiter les demandes de remboursement et les litiges
+- Envoyer des annonces ou notifications à tout le système
+- Surveiller la santé du système (disponibilité API, taux d’erreur)
+- Gérer le contenu (FAQ, conditions d’utilisation, politique de confidentialité)
+
+---
+
+## Étape 2 — Regroupement par domaine métier (DDD)
+
+> **Principe appliqué :** Forte cohésion dans chaque module (toutes les fonctionnalités partagent la même raison de changer métier), Faible couplage entre modules (chaque module expose des interfaces propres, ne dépend pas des internes d’un autre).
+
+Après analyse de la liste des fonctionnalités, six **Contextes Délimités (Bounded Contexts)** émergent naturellement :
+
+| # | Module / Contexte délimité | Responsabilité principale | Raison de séparation |
 |---|---|---|---|
-| 1 | **UserIdentity** | Who are you? Authentication & profile | Auth/security changes independently of everything else |
-| 2 | **Catalog** | What is available? Offer lifecycle management | Businesses publish/edit offers; changes frequently |
-| 3 | **Order** | What was purchased? Order lifecycle & QR validation | Payment, fulfillment, and dispute rules are complex and distinct |
-| 4 | **Payment** | How is money handled? Charges, payouts, refunds | Financial logic is regulated and completely isolated |
-| 5 | **Notification** | How are users informed? Alerts, emails, push | Communication channel logic changes independently |
-| 6 | **Administration** | Who runs the platform? Moderation & governance | Admin workflows are internal and never exposed to end users |
+| 1 | **UserIdentity** | Qui êtes-vous ? Authentification & profil | L’authentification/sécurité change indépendamment du reste |
+| 2 | **Catalog** | Qu’est-ce qui est disponible ? Cycle de vie des offres | Les établissements publient/modifient des offres ; change souvent |
+| 3 | **Order** | Qu’a-t-on acheté ? Cycle de vie des commandes & validation QR | Le paiement, la livraison et les litiges sont complexes et distincts |
+| 4 | **Payment** | Comment l’argent est-il géré ? Paiements, reversements, remboursements | La logique financière est régulée et complètement isolée |
+| 5 | **Notification** | Comment les utilisateurs sont-ils informés ? Alertes, emails, push | La logique des canaux de communication change indépendamment |
+| 6 | **Administration** | Qui gère la plateforme ? Modération & gouvernance | Les workflows d’administration sont internes et jamais exposés aux utilisateurs finaux |
 
 ---
 
 ### Module 1 — `UserIdentity`
 
-**Cohesion rationale:** All features here have one reason to change — how users are authenticated and how their personal profile is managed. Sending an email to a user is *not* this module's job (that belongs to `Notification`).
+**Justification de cohésion :** Toutes les fonctionnalités ici ont une seule raison de changer — comment les utilisateurs sont authentifiés et comment leur profil personnel est géré. Envoyer un email à un utilisateur n’est *pas* le travail de ce module (c’est le rôle de `Notification`).
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Register a new consumer account | Consumer |
-| Log in / Log out | Consumer |
-| Reset forgotten password | Consumer |
-| View and edit personal profile | Consumer |
-| Manage notification preferences | Consumer |
-| Register a business account | Business |
-| Submit business for admin approval | Business |
-| Log in to business dashboard | Business |
-| Manage user / business accounts (admin) | Admin |
-| Approve / reject / suspend accounts | Admin |
+| Créer un compte consommateur | Consommateur |
+| Se connecter / déconnecter | Consommateur |
+| Réinitialiser le mot de passe | Consommateur |
+| Consulter et modifier le profil | Consommateur |
+| Gérer les préférences de notification | Consommateur |
+| Créer un compte établissement | Commercial |
+| Soumettre un établissement pour approbation admin | Commercial |
+| Accéder au tableau de bord établissement | Commercial |
+| Gérer les comptes utilisateurs/établissements | Admin |
+| Approuver / rejeter / suspendre des comptes | Admin |
 
 ---
 
 ### Module 2 — `Catalog`
 
-**Cohesion rationale:** Everything related to *what food is available* lives here. The offer is the central artifact: its creation, visibility, stock, and discovery. Geographic search is also here because it directly queries offers. Pricing rules (discounts, commissions) are deferred to `Payment` and `Administration`.
+**Justification de cohésion :** Tout ce qui concerne *ce qui est disponible* vit ici. L’offre est l’artefact central : sa création, sa visibilité, son stock, sa découverte. La recherche géographique est également ici car elle interroge directement les offres. Les règles de prix (remises, commissions) sont déléguées à `Payment` et `Administration`.
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Create a new meal offer | Business |
-| Edit an existing offer | Business |
-| Deactivate / delete an offer | Business |
-| Mark an offer as "sold out" | Business |
-| View real-time stock count | Business |
-| Manage categories and food tags | Admin |
-| Browse offers (map / list view) | Consumer |
-| Filter offers (category, distance, price, dietary tag) | Consumer |
-| Search offers by name or type | Consumer |
-| View detailed offer page | Consumer |
-| Save favourite businesses | Consumer |
-| Upload business logo and photos | Business |
-| Manage business opening hours | Business |
-| Set pickup location / service radius | Business |
+| Créer une nouvelle offre de repas | Commercial |
+| Modifier une offre existante | Commercial |
+| Désactiver / supprimer une offre | Commercial |
+| Marquer une offre comme épuisée | Commercial |
+| Voir le stock en temps réel | Commercial |
+| Gérer les catégories et tags alimentaires | Admin |
+| Parcourir les offres (carte / liste) | Consommateur |
+| Filtrer les offres (catégorie, distance, prix, tag diététique) | Consommateur |
+| Rechercher des offres par nom ou type | Consommateur |
+| Voir le détail d’une offre | Consommateur |
+| Enregistrer des favoris | Consommateur |
+| Télécharger logo et photos | Commercial |
+| Gérer les horaires d’ouverture | Commercial |
+| Définir le lieu de retrait / rayon | Commercial |
 
 ---
 
 ### Module 3 — `Order`
 
-**Cohesion rationale:** All features share the same business lifecycle — from cart to pickup confirmation. QR validation belongs here because it is a step in the order fulfillment workflow, not a communication event. Disputes are initiated here but *resolved* in `Payment`.
+**Justification de cohésion :** Toutes les fonctionnalités partagent le même cycle de vie métier — du panier à la confirmation de retrait. La validation QR appartient ici car c’est une étape du flux de traitement de la commande, pas un événement de communication. Les litiges sont initiés ici mais *résolus* dans `Payment`.
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Add / remove item from cart | Consumer |
-| Apply promo code | Consumer |
-| Place an order | Consumer |
-| Receive order confirmation | Consumer |
-| View current and past orders | Consumer |
-| Cancel an order | Consumer |
-| Generate QR code for pickup | Consumer |
-| Scan QR code to validate pickup | Business |
-| Mark an order as picked up / completed | Business |
-| View incoming orders for the day | Business |
-| Report a problem with an order | Consumer |
-| View orders and disputes (admin) | Admin |
+| Ajouter / retirer du panier | Consommateur |
+| Appliquer un code promo | Consommateur |
+| Passer une commande | Consommateur |
+| Recevoir la confirmation de commande | Consommateur |
+| Voir les commandes en cours et passées | Consommateur |
+| Annuler une commande | Consommateur |
+| Générer un QR pour le retrait | Consommateur |
+| Scanner le QR pour valider le retrait | Commercial |
+| Marquer une commande comme retirée / terminée | Commercial |
+| Voir les commandes du jour | Commercial |
+| Signaler un problème avec une commande | Consommateur |
+| Voir les commandes et litiges (admin) | Admin |
 
 ---
 
 ### Module 4 — `Payment`
 
-**Cohesion rationale:** All money movement is isolated here. This module integrates with external payment providers (Stripe, etc.) and is subject to financial regulation — it must be able to evolve (or be replaced) without touching `Order` or `Catalog`.
+**Justification de cohésion :** Tous les mouvements d’argent sont isolés ici. Ce module s’intègre avec des prestataires de paiement externes (Stripe, etc.) et est soumis à la réglementation financière — il doit pouvoir évoluer (ou être remplacé) sans toucher à `Order` ou `Catalog`.
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Process online payment at checkout | Consumer |
-| Process refund request | Consumer |
-| Open and resolve a dispute | Consumer |
-| Receive payouts for completed orders | Business |
-| View payout history and invoices | Business |
-| Configure commission rates | Admin |
-| Process refund and dispute resolution | Admin |
-| Manage platform-wide promo codes | Admin |
+| Payer en ligne lors de la commande | Consommateur |
+| Demander un remboursement | Consommateur |
+| Ouvrir et résoudre un litige | Consommateur |
+| Recevoir les reversements pour commandes terminées | Commercial |
+| Voir l’historique des paiements et factures | Commercial |
+| Configurer les taux de commission | Admin |
+| Traiter les remboursements et litiges | Admin |
+| Gérer les codes promo plateforme | Admin |
 
 ---
 
 ### Module 5 — `Notification`
 
-**Cohesion rationale:** All communication events are centralised here regardless of their channel (email, push, in-app). Other modules emit *Domain Events* (e.g., `OrderPlaced`, `OfferLowStock`); this module *listens* and decides how to communicate. This is a classic Observer pattern — the emitter has zero knowledge of the notification channel.
+**Justification de cohésion :** Tous les événements de communication sont centralisés ici, quel que soit le canal (email, push, in-app). Les autres modules émettent des *Événements de Domaine* (ex. `OrderPlaced`, `OfferLowStock`) ; ce module les *écoute* et décide comment communiquer. C’est un pattern Observateur classique — l’émetteur ne connaît pas le canal de notification.
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Send order confirmation (in-app + email) | System |
-| Send push/email alerts for new offers nearby | Consumer |
-| Notify business of new order | Business |
-| Notify business when offer stock is low | Business |
-| Send system-wide announcements | Admin |
-| Manage notification preferences (consumer) | Consumer |
+| Envoyer la confirmation de commande (in-app + email) | Système |
+| Envoyer des alertes push/email pour nouvelles offres à proximité | Consommateur |
+| Notifier l’établissement d’une nouvelle commande | Commercial |
+| Notifier l’établissement en cas de stock bas | Commercial |
+| Envoyer des annonces système | Admin |
+| Gérer les préférences de notification (consommateur) | Consommateur |
 
 ---
 
 ### Module 6 — `Administration`
 
-**Cohesion rationale:** Governance, moderation, and platform-level configuration are internal operations that no consumer or business can access. These features change at the pace of business policy — independently of product features.
+**Justification de cohésion :** La gouvernance, la modération et la configuration plateforme sont des opérations internes qu’aucun consommateur ou établissement ne peut accéder. Ces fonctionnalités changent au rythme des règles métier — indépendamment des fonctionnalités produit.
 
-| Feature | Origin |
+| Fonctionnalité | Perspective |
 |---|---|
-| Moderate reported content (reviews, offers) | Admin |
-| View platform analytics dashboard | Admin |
-| Monitor system health | Admin |
-| Manage content (FAQs, ToS, privacy policy) | Admin |
-| View business analytics dashboard | Business (read-only view) |
-| Rate and review a business | Consumer |
-| Respond to consumer reviews | Business |
+| Modérer les signalements (avis, offres) | Admin |
+| Voir le tableau de bord analytique | Admin |
+| Surveiller la santé système | Admin |
+| Gérer le contenu (FAQ, CGU, politique confidentialité) | Admin |
+| Voir le tableau de bord analytique établissement | Commercial (lecture seule) |
+| Noter et commenter un établissement | Consommateur |
+| Répondre aux avis consommateurs | Commercial |
 
 ---
 
@@ -218,9 +218,9 @@ After analysing the feature list, six **Bounded Contexts** emerge naturally:
                            │ (auth token / user identity)
           ┌────────────────┼──────────────────┐
           ▼                ▼                  ▼
-   ┌─────────────┐  ┌─────────────┐  ┌──────────────┐
+   ┌─────────────┐  ┌─────────────┐  ┌───────────────┐
    │   Catalog   │  │    Order    │  │ Administration│
-   └──────┬──────┘  └──────┬──────┘  └──────────────┘
+   └──────┬──────┘  └──────┬──────┘  └───────────────┘
           │                │
           │  (offer ref)   │  (order events)
           └────────┬───────┘
@@ -237,52 +237,52 @@ After analysing the feature list, six **Bounded Contexts** emerge naturally:
           └───────────────┘
 ```
 
-> **Low Coupling enforced:** `Notification` never imports from `Order` or `Catalog` directly. It only reacts to published Domain Events. `Catalog` never knows `Payment` exists — it simply stores a price. `Order` calls `Payment` through an interface (Dependency Inversion Principle).
-
+> **Faible couplage appliqué :** `Notification` n’importe jamais directement depuis `Order` ou `Catalog`. Il réagit seulement aux Événements de Domaine publiés. `Catalog` ne sait jamais que `Payment` existe — il stocke simplement un prix. `Order` appelle `Payment` via une interface (Principe d’Inversion des Dépendances).
 ---
 
-## Step 3 — Business Entities per Module
 
-> **Vocabulary:**
-> - **Entity** — Has a unique identity, is mutable over time (e.g., `Order` changes status)
-> - **Value Object** — No identity, immutable, defined entirely by its values (e.g., `Money(8.50, EUR)`)
-> - **Aggregate Root** — The single entry point to a cluster of related entities; external modules only hold a reference to the root's ID
+## Étape 3 — Entités métier par module
+
+> **Vocabulaire :**
+> - **Entité** — Possède une identité unique, est mutable dans le temps (ex. `Order` change de statut)
+> - **Value Object** — Pas d’identité, immuable, défini uniquement par ses valeurs (ex. `Money(8.50, EUR)`)
+> - **Agrégat (Aggregate Root)** — Point d’entrée unique vers un cluster d’entités ; les modules externes ne gardent qu’une référence vers l’ID de la racine
 
 ---
 
 ### Module 1 — `UserIdentity`
 
-#### Entity: `User`
-| Attribute | Type | Derived from |
+#### Entité : `User`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `email` | String | Registration |
-| `passwordHash` | String | Registration |
-| `role` | Enum: `CONSUMER, BUSINESS, ADMIN` | Registration type |
-| `status` | Enum: `PENDING, ACTIVE, SUSPENDED` | Admin approval |
-| `createdAt` | DateTime | System |
+| `id` | UUID | Généré par le système |
+| `email` | String | Inscription |
+| `passwordHash` | String | Inscription |
+| `role` | Enum : `CONSUMER, BUSINESS, ADMIN` | Type d’inscription |
+| `status` | Enum : `PENDING, ACTIVE, SUSPENDED` | Action admin |
+| `createdAt` | DateTime | Système |
 
-#### Entity: `ConsumerProfile` *(owned by User)*
-| Attribute | Type | Derived from |
+#### Entité : `ConsumerProfile` *(propriété de User)*
+| Attribut | Type | Provenance |
 |---|---|---|
-| `userId` | UUID | FK to User |
-| `firstName` | String | Profile edit |
-| `lastName` | String | Profile edit |
-| `dietaryPreferences` | List\<Tag\> | Profile edit |
-| `notificationPreferences` | NotificationPreferences | Settings |
+| `userId` | UUID | FK vers User |
+| `firstName` | String | Édition profil |
+| `lastName` | String | Édition profil |
+| `dietaryPreferences` | List\<Tag\> | Édition profil |
+| `notificationPreferences` | NotificationPreferences | Paramètres |
 
-#### Entity: `BusinessProfile` *(owned by User)*
-| Attribute | Type | Derived from |
+#### Entité : `BusinessProfile` *(propriété de User)*
+| Attribut | Type | Provenance |
 |---|---|---|
-| `userId` | UUID | FK to User |
-| `businessName` | String | Registration |
-| `registrationNumber` | String | Registration (SIRET) |
-| `businessType` | Enum: `RESTAURANT, BAKERY, SUSHI, ...` | Registration |
-| `logoUrl` | String | Upload |
-| `approvalStatus` | Enum: `PENDING, APPROVED, REJECTED` | Admin action |
+| `userId` | UUID | FK vers User |
+| `businessName` | String | Inscription |
+| `registrationNumber` | String | Inscription (SIRET) |
+| `businessType` | Enum : `RESTAURANT, BAKERY, SUSHI, ...` | Inscription |
+| `logoUrl` | String | Téléchargement |
+| `approvalStatus` | Enum : `PENDING, APPROVED, REJECTED` | Action admin |
 
-#### Value Object: `NotificationPreferences`
-| Attribute | Type |
+#### Value Object : `NotificationPreferences`
+| Attribut | Type |
 |---|---|
 | `emailEnabled` | Boolean |
 | `pushEnabled` | Boolean |
@@ -293,45 +293,45 @@ After analysing the feature list, six **Bounded Contexts** emerge naturally:
 
 ### Module 2 — `Catalog`
 
-#### Aggregate Root: `Offer`
-> An `Offer` is the central artifact of the entire platform. Its lifecycle (DRAFT → ACTIVE → SOLD_OUT → EXPIRED) drives many downstream events.
+#### Agrégat (Racine) : `Offer`
+> Une `Offer` est l’artefact central de toute la plateforme. Son cycle de vie (DRAFT → ACTIVE → SOLD_OUT → EXPIRED) entraîne de nombreux événements aval.
 
-| Attribute | Type | Derived from |
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `businessId` | UUID | FK to BusinessProfile |
-| `title` | String | Feature: Create offer |
-| `description` | String | Feature: Create offer |
-| `photoUrls` | List\<String\> | Feature: Upload photos |
-| `category` | Enum: `BAKERY, RESTAURANT, SUSHI, ...` | Feature: Tag filtering |
-| `dietaryTags` | List\<Tag\> | Feature: Filter by diet |
-| `originalPrice` | Money | Feature: Show original price |
-| `discountedPrice` | Money | Feature: Discounted selling price |
-| `totalQuantity` | Integer | Feature: Set stock |
-| `remainingQuantity` | Integer | Feature: Real-time stock |
-| `pickupWindow` | TimeWindow | Feature: Pickup time |
-| `expiresAt` | DateTime | Feature: Offer expiry |
-| `status` | Enum: `DRAFT, ACTIVE, SOLD_OUT, EXPIRED, DELETED` | Lifecycle |
-| `pickupLocation` | Address | Feature: Set location |
+| `id` | UUID | Généré par le système |
+| `businessId` | UUID | FK vers BusinessProfile |
+| `title` | String | Créer offre |
+| `description` | String | Créer offre |
+| `photoUrls` | List\<String\> | Télécharger photos |
+| `category` | Enum : `BAKERY, RESTAURANT, SUSHI, ...` | Filtrage par catégorie |
+| `dietaryTags` | List\<Tag\> | Filtrage diététique |
+| `originalPrice` | Money | Prix original |
+| `discountedPrice` | Money | Prix de vente réduit |
+| `totalQuantity` | Integer | Stock initial |
+| `remainingQuantity` | Integer | Stock temps réel |
+| `pickupWindow` | TimeWindow | Créneau retrait |
+| `expiresAt` | DateTime | Expiration offre |
+| `status` | Enum : `DRAFT, ACTIVE, SOLD_OUT, EXPIRED, DELETED` | Cycle de vie |
+| `pickupLocation` | Address | Lieu de retrait |
 
-#### Entity: `Business` *(read-only projection from UserIdentity)*
-> `Catalog` only holds a `businessId` reference. Full business data lives in `UserIdentity`. This enforces Low Coupling.
+#### Entité : `Business` *(projection lecture seule depuis UserIdentity)*
+> `Catalog` ne conserve qu’une référence `businessId`. Les données complètes de l’établissement vivent dans `UserIdentity`. Cela applique le faible couplage.
 
-#### Value Object: `Money`
-| Attribute | Type |
+#### Value Object : `Money`
+| Attribut | Type |
 |---|---|
 | `amount` | BigDecimal |
-| `currency` | Enum: `EUR, USD, ...` |
+| `currency` | Enum : `EUR, USD, ...` |
 
-#### Value Object: `TimeWindow`
-| Attribute | Type |
+#### Value Object : `TimeWindow`
+| Attribut | Type |
 |---|---|
 | `startTime` | LocalTime |
 | `endTime` | LocalTime |
 | `date` | LocalDate |
 
-#### Value Object: `Address`
-| Attribute | Type |
+#### Value Object : `Address`
+| Attribut | Type |
 |---|---|
 | `street` | String |
 | `city` | String |
@@ -339,190 +339,190 @@ After analysing the feature list, six **Bounded Contexts** emerge naturally:
 | `latitude` | Double |
 | `longitude` | Double |
 
-#### Entity: `Category`
-| Attribute | Type |
+#### Entité : `Category`
+| Attribut | Type |
 |---|---|
 | `id` | UUID |
 | `name` | String |
 | `iconUrl` | String |
 
-#### Entity: `Tag` *(dietary / food label)*
-| Attribute | Type |
+#### Entité : `Tag` *(diététique / label alimentaire)*
+| Attribut | Type |
 |---|---|
 | `id` | UUID |
-| `label` | String (e.g., "vegan", "gluten-free") |
+| `label` | String (ex. "vegan", "sans gluten") |
 
 ---
 
 ### Module 3 — `Order`
 
-#### Aggregate Root: `Order`
-> The `Order` aggregate encapsulates the full purchase lifecycle. The `Cart` is a transient pre-order state — it becomes an `Order` upon payment confirmation. No external module modifies an `Order` directly; all changes go through the aggregate root.
+#### Agrégat (Racine) : `Order`
+> L’agrégat `Order` encapsule le cycle de vie complet de l’achat. Le `Cart` est un état pré-commande transitoire — il devient une `Order` après confirmation du paiement. Aucun module externe ne modifie une `Order` directement ; tous les changements passent par la racine d’agrégat.
 
-| Attribute | Type | Derived from |
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `consumerId` | UUID | FK to UserIdentity |
-| `businessId` | UUID | FK to UserIdentity |
-| `items` | List\<OrderItem\> | Feature: Add to cart |
-| `subtotal` | Money | Computed |
-| `discountApplied` | Money | Feature: Promo code |
-| `totalAmount` | Money | Computed |
-| `promoCode` | String (nullable) | Feature: Apply promo |
-| `status` | Enum: `PENDING, CONFIRMED, READY, PICKED_UP, CANCELLED, DISPUTED` | Lifecycle |
-| `pickupCode` | String (QR payload) | Feature: Generate QR |
-| `placedAt` | DateTime | System |
-| `confirmedAt` | DateTime | Payment event |
-| `pickedUpAt` | DateTime | Business scan |
+| `id` | UUID | Généré par le système |
+| `consumerId` | UUID | FK vers UserIdentity |
+| `businessId` | UUID | FK vers UserIdentity |
+| `items` | List\<OrderItem\> | Ajout au panier |
+| `subtotal` | Money | Calculé |
+| `discountApplied` | Money | Code promo |
+| `totalAmount` | Money | Calculé |
+| `promoCode` | String (nullable) | Appliquer promo |
+| `status` | Enum : `PENDING, CONFIRMED, READY, PICKED_UP, CANCELLED, DISPUTED` | Cycle de vie |
+| `pickupCode` | String (payload QR) | Générer QR |
+| `placedAt` | DateTime | Système |
+| `confirmedAt` | DateTime | Événement paiement |
+| `pickedUpAt` | DateTime | Scan établissement |
 
-#### Entity: `OrderItem` *(part of Order aggregate)*
-| Attribute | Type | Derived from |
+#### Entité : `OrderItem` *(partie de l’agrégat Order)*
+| Attribut | Type | Provenance |
 |---|---|---|
-| `offerId` | UUID | FK to Catalog.Offer |
-| `offerTitle` | String | Snapshot at order time |
-| `unitPrice` | Money | Snapshot at order time |
-| `quantity` | Integer | Feature: Add to cart |
+| `offerId` | UUID | FK vers Catalog.Offer |
+| `offerTitle` | String | Instantané à la commande |
+| `unitPrice` | Money | Instantané à la commande |
+| `quantity` | Integer | Ajout au panier |
 
-> **Design note:** `offerTitle` and `unitPrice` are *snapshotted* at order creation. This is critical — if a business edits or deletes an offer, historical orders must remain intact. This is the **Immutable Snapshot** pattern.
+> **Note de conception :** `offerTitle` et `unitPrice` sont *instantanés* (snapshot) à la création de la commande. C’est critique — si un établissement modifie ou supprime une offre, les commandes historiques doivent rester intactes. C’est le patron **Instantané Immuable (Immutable Snapshot)**.
 
-#### Entity: `Dispute`
-| Attribute | Type | Derived from |
+#### Entité : `Dispute`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `orderId` | UUID | FK to Order |
-| `consumerId` | UUID | FK to UserIdentity |
-| `reason` | String | Feature: Report problem |
-| `status` | Enum: `OPEN, UNDER_REVIEW, RESOLVED, REJECTED` | Admin action |
-| `resolution` | String (nullable) | Admin action |
-| `createdAt` | DateTime | System |
+| `id` | UUID | Généré par le système |
+| `orderId` | UUID | FK vers Order |
+| `consumerId` | UUID | FK vers UserIdentity |
+| `reason` | String | Signaler problème |
+| `status` | Enum : `OPEN, UNDER_REVIEW, RESOLVED, REJECTED` | Action admin |
+| `resolution` | String (nullable) | Action admin |
+| `createdAt` | DateTime | Système |
 
 ---
 
 ### Module 4 — `Payment`
 
-#### Aggregate Root: `Payment`
-> All financial records are immutable once created (append-only). A `Refund` is a new record, never a mutation of the original `Payment`. This aligns with financial audit requirements and is a foundation for Event Sourcing if needed.
+#### Agrégat (Racine) : `Payment`
+> Tous les enregistrements financiers sont immuables une fois créés (append-only). Un `Refund` est un nouvel enregistrement, jamais une mutation du `Payment` original. Cela respecte les exigences d’audit financier et est une base pour l’Event Sourcing si nécessaire.
 
-| Attribute | Type | Derived from |
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `orderId` | UUID | FK to Order |
-| `consumerId` | UUID | FK to UserIdentity |
-| `amount` | Money | Order total |
-| `status` | Enum: `PENDING, SUCCEEDED, FAILED, REFUNDED` | Payment provider |
-| `externalTransactionId` | String | Stripe / provider |
-| `createdAt` | DateTime | System |
+| `id` | UUID | Généré par le système |
+| `orderId` | UUID | FK vers Order |
+| `consumerId` | UUID | FK vers UserIdentity |
+| `amount` | Money | Total commande |
+| `status` | Enum : `PENDING, SUCCEEDED, FAILED, REFUNDED` | Prestataire paiement |
+| `externalTransactionId` | String | Stripe / prestataire |
+| `createdAt` | DateTime | Système |
 
-#### Entity: `Payout`
-| Attribute | Type | Derived from |
+#### Entité : `Payout`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `businessId` | UUID | FK to UserIdentity |
-| `amount` | Money | Orders completed in period |
-| `commissionDeducted` | Money | Feature: Commission config |
-| `status` | Enum: `SCHEDULED, PROCESSED, FAILED` | Batch job |
-| `periodStart` | LocalDate | Payout schedule |
-| `periodEnd` | LocalDate | Payout schedule |
+| `id` | UUID | Généré par le système |
+| `businessId` | UUID | FK vers UserIdentity |
+| `amount` | Money | Commandes terminées sur la période |
+| `commissionDeducted` | Money | Configuration commission |
+| `status` | Enum : `SCHEDULED, PROCESSED, FAILED` | Tâche batch |
+| `periodStart` | LocalDate | Calendrier reversement |
+| `periodEnd` | LocalDate | Calendrier reversement |
 
-#### Entity: `Refund`
-| Attribute | Type | Derived from |
+#### Entité : `Refund`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `paymentId` | UUID | FK to Payment |
-| `disputeId` | UUID (nullable) | FK to Dispute |
-| `amount` | Money | Refund amount |
-| `reason` | String | Admin / consumer |
-| `status` | Enum: `PENDING, PROCESSED, FAILED` | Provider |
+| `id` | UUID | Généré par le système |
+| `paymentId` | UUID | FK vers Payment |
+| `disputeId` | UUID (nullable) | FK vers Dispute |
+| `amount` | Money | Montant remboursé |
+| `reason` | String | Admin / consommateur |
+| `status` | Enum : `PENDING, PROCESSED, FAILED` | Prestataire |
 
-#### Value Object: `CommissionRate`
-| Attribute | Type |
+#### Value Object : `CommissionRate`
+| Attribut | Type |
 |---|---|
 | `businessType` | Enum |
-| `rate` | BigDecimal (e.g., 0.15 = 15%) |
+| `rate` | BigDecimal (ex. 0.15 = 15%) |
 
 ---
 
 ### Module 5 — `Notification`
 
-> This module contains **no business entities** in the DDD sense — it is purely reactive. It subscribes to Domain Events emitted by other modules and converts them into communications.
+> Ce module ne contient **aucune entité métier** au sens DDD — il est purement réactif. Il s’abonne aux Événements de Domaine émis par les autres modules et les transforme en communications.
 
-#### Entity: `NotificationLog` *(audit trail)*
-| Attribute | Type | Derived from |
+#### Entité : `NotificationLog` *(piste d’audit)*
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `recipientId` | UUID | Target user |
-| `channel` | Enum: `EMAIL, PUSH, IN_APP` | Preferences |
-| `type` | Enum: `ORDER_CONFIRMED, NEW_OFFER, LOW_STOCK, ...` | Domain Event |
-| `payload` | JSON | Event data |
-| `sentAt` | DateTime | System |
-| `status` | Enum: `SENT, FAILED, SKIPPED` | Delivery result |
+| `id` | UUID | Généré par le système |
+| `recipientId` | UUID | Utilisateur cible |
+| `channel` | Enum : `EMAIL, PUSH, IN_APP` | Préférences |
+| `type` | Enum : `ORDER_CONFIRMED, NEW_OFFER, LOW_STOCK, ...` | Événement Domaine |
+| `payload` | JSON | Données de l’événement |
+| `sentAt` | DateTime | Système |
+| `status` | Enum : `SENT, FAILED, SKIPPED` | Résultat livraison |
 
-#### Domain Events consumed (from other modules):
-| Event | Emitted by | Action |
+#### Événements de Domaine consommés (depuis autres modules) :
+| Événement | Émis par | Action |
 |---|---|---|
-| `OrderPlaced` | Order | Notify consumer (confirmation) + business (new order) |
-| `OrderPickedUp` | Order | Notify consumer (receipt) |
-| `OrderCancelled` | Order | Notify business |
-| `OfferLowStock` | Catalog | Notify business |
-| `BusinessApproved` | UserIdentity | Notify business |
-| `DisputeResolved` | Payment | Notify consumer |
+| `OrderPlaced` | Order | Notifier consommateur (confirmation) + établissement (nouvelle commande) |
+| `OrderPickedUp` | Order | Notifier consommateur (reçu) |
+| `OrderCancelled` | Order | Notifier établissement |
+| `OfferLowStock` | Catalog | Notifier établissement |
+| `BusinessApproved` | UserIdentity | Notifier établissement |
+| `DisputeResolved` | Payment | Notifier consommateur |
 
 ---
 
 ### Module 6 — `Administration`
 
-#### Entity: `Review`
-| Attribute | Type | Derived from |
+#### Entité : `Review`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `consumerId` | UUID | FK to UserIdentity |
-| `businessId` | UUID | FK to UserIdentity |
-| `orderId` | UUID | FK to Order |
-| `rating` | Integer (1–5) | Feature: Rate business |
-| `comment` | String | Feature: Write review |
-| `businessReply` | String (nullable) | Feature: Business response |
-| `status` | Enum: `VISIBLE, FLAGGED, REMOVED` | Moderation |
-| `createdAt` | DateTime | System |
+| `id` | UUID | Généré par le système |
+| `consumerId` | UUID | FK vers UserIdentity |
+| `businessId` | UUID | FK vers UserIdentity |
+| `orderId` | UUID | FK vers Order |
+| `rating` | Integer (1–5) | Noter établissement |
+| `comment` | String | Écrire avis |
+| `businessReply` | String (nullable) | Réponse établissement |
+| `status` | Enum : `VISIBLE, FLAGGED, REMOVED` | Modération |
+| `createdAt` | DateTime | Système |
 
-#### Entity: `PromoCode`
-| Attribute | Type | Derived from |
+#### Entité : `PromoCode`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `code` | String | Admin creates |
-| `discountType` | Enum: `PERCENTAGE, FIXED` | Feature |
-| `discountValue` | BigDecimal | Feature |
-| `validFrom` | DateTime | Feature |
-| `validUntil` | DateTime | Feature |
-| `maxUses` | Integer | Feature |
-| `currentUses` | Integer | Computed |
-| `status` | Enum: `ACTIVE, EXPIRED, DISABLED` | Lifecycle |
+| `id` | UUID | Généré par le système |
+| `code` | String | Création admin |
+| `discountType` | Enum : `PERCENTAGE, FIXED` | Règle |
+| `discountValue` | BigDecimal | Règle |
+| `validFrom` | DateTime | Règle |
+| `validUntil` | DateTime | Règle |
+| `maxUses` | Integer | Règle |
+| `currentUses` | Integer | Calculé |
+| `status` | Enum : `ACTIVE, EXPIRED, DISABLED` | Cycle de vie |
 
-#### Entity: `ModerationReport`
-| Attribute | Type | Derived from |
+#### Entité : `ModerationReport`
+| Attribut | Type | Provenance |
 |---|---|---|
-| `id` | UUID | System-generated |
-| `reportedBy` | UUID | FK to UserIdentity |
-| `targetType` | Enum: `REVIEW, OFFER, USER` | Feature: Report |
-| `targetId` | UUID | Target entity |
-| `reason` | String | Feature: Report |
-| `status` | Enum: `PENDING, REVIEWED, ACTIONED` | Admin |
+| `id` | UUID | Généré par le système |
+| `reportedBy` | UUID | FK vers UserIdentity |
+| `targetType` | Enum : `REVIEW, OFFER, USER` | Signalement |
+| `targetId` | UUID | Entité ciblée |
+| `reason` | String | Signalement |
+| `status` | Enum : `PENDING, REVIEWED, ACTIONED` | Admin |
 
 ---
 
-## Design Summary — 4-Question Checklist
+## Synthèse de conception — Checklist des 4 questions
 
-As taught by Prof. Addi, every feature must answer these four questions:
+Comme enseigné par le Prof. Addi, chaque fonctionnalité doit répondre à ces quatre questions :
 
-| Module | What module? | What data? | What logic? | What interaction? |
+| Module | Quel module ? | Quelles données ? | Quelle logique ? | Quelle interaction ? |
 |---|---|---|---|---|
-| UserIdentity | User lifecycle | User, ConsumerProfile, BusinessProfile | Password hashing, role assignment, approval flow | REST (POST /register, POST /login), Admin dashboard |
-| Catalog | Offer availability | Offer, Category, Tag | Stock decrement, expiry check, geo-search | REST (GET /offers, POST /offers), Cron (expire offers) |
-| Order | Purchase flow | Order, OrderItem, Dispute | Promo validation, QR generation, snapshot prices | REST (POST /orders, PATCH /orders/{id}/cancel), QR scan event |
-| Payment | Money movement | Payment, Payout, Refund | Commission deduction, refund eligibility | Stripe webhook, REST (GET /payouts), Cron (weekly payout) |
-| Notification | Communication | NotificationLog | Channel routing, preference filtering | Event listener (Kafka / Observer), Email/Push provider |
-| Administration | Platform governance | Review, PromoCode, ModerationReport | Moderation rules, promo validity | Admin REST API, internal dashboard |
+| UserIdentity | Cycle de vie utilisateur | User, ConsumerProfile, BusinessProfile | Hachage mot de passe, attribution rôles, flux d’approbation | REST (POST /register, POST /login), dashboard admin |
+| Catalog | Disponibilité des offres | Offer, Category, Tag | Décrément stock, vérification expiration, recherche géographique | REST (GET /offers, POST /offers), Cron (expiration offres) |
+| Order | Flux d’achat | Order, OrderItem, Dispute | Validation promo, génération QR, instantané des prix | REST (POST /orders, PATCH /orders/{id}/cancel), événement scan QR |
+| Payment | Mouvements d’argent | Payment, Payout, Refund | Calcul commission, éligibilité remboursement | Webhook Stripe, REST (GET /payouts), Cron (reversement hebdomadaire) |
+| Notification | Communication | NotificationLog | Routage par canal, filtrage par préférences | Écoute d’événements (Kafka / Observer), fournisseurs Email/Push |
+| Administration | Gouvernance plateforme | Review, PromoCode, ModerationReport | Règles de modération, validité promo | API REST Admin, dashboard interne |
 
 ---
 
-*Document produced as part of the EcoMeal TP — Design Workflow Steps 1–3.*  
-*Next step: Step 4 — Deriving technical components and writing ADRs.*
+*Document réalisé dans le cadre du TP EcoMeal — Workflow de conception Étapes 1–3.*  
+*Prochaine étape : Étape 4 — Déduction des composants techniques et rédaction des ADRs.*
